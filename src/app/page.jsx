@@ -1,5 +1,6 @@
 'use client'
 import {create} from 'zustand'
+import Board from '../app/tic-tac-toe/board/Board'
 
 const useCounter = create((set) => ({
   count: 0,
@@ -29,6 +30,8 @@ export default function Home() {
               decrement
             </button>
           </div>
+
+          <Board />
         </div>
       </main>
     </div>
