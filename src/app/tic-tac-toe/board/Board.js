@@ -1,26 +1,37 @@
-function Square({ value, onSquareClick }) {
-    return (
-      <button
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 0,
-          backgroundColor: '#fff',
-          border: '1px solid #999',
-          outline: 0,
-          borderRadius: 0,
-          fontSize: '1rem',
-          fontWeight: 'bold',
-        }}
-        onClick={onSquareClick}
-      >
-        {value}
-      </button>
-    )
-  }
+import {useGameBoard} from '../../store/tic-tac-toe/store'
+import Square from '../Square/Square'
 
 export default function Board() {
+  const squares = useGameBoard((state) => state.squares)
+  const setSquares = useGameBoard((state) => state.setSquares)
+  const isXNext = useGameBoard((state) => state.isXNext)
+  const setIsXNext = useGameBoard((state) => state.setIsXNext)
+
+  const player = isXNext ? 'X' : 'O';
+
+  function handleClick(index){
+    if(squares[index]) return;
+    const newSquares = squares.slice();
+    newSquares[index] = player
+    setSquares(newSquares)
+    setIsXNext(!player)
+  }
+
+  function isGameOver(){
+    return squares.filter(square => !square).length
+  }
+
+  // calc winner -> calc status
+  // set array of winningLines
+  // if 3 in a row, then check a===b && a===c
+  // return a 
+  // return null
+
+  // calc status -> handleclick
+  // winningLines -> calcWinner
+  // isGameOver && !winner -> Draw!
+  // ???
+  
     return (
       <div
         style={{
@@ -32,16 +43,9 @@ export default function Board() {
           border: '1px solid #999',
         }}
       >
-        <Square value="1" />
-        <Square value="2" />
-        <Square value="3" />
-        <Square value="4" />
-        <Square value="5" />
-        <Square value="6" />
-        <Square value="7" />
-        <Square value="8" />
-        <Square value="9" />
+      {squares.map((item, index) => (
+        <Square key={index} value={item} onSquareClick={handleClick} />
+      ))}
       </div>
     )
   }
-  
