@@ -1,6 +1,7 @@
 'use client'
 import {useGameBoard} from '../../store/tic-tac-toe/store'
 import Square from '../Square/Square'
+import {calculateWinner, turnsLeft, calculateStatus} from '../utils/utils'
 
 export default function Board() {
   const squares = useGameBoard((state) => state.squares)
@@ -10,6 +11,12 @@ export default function Board() {
 
   const player = isXNext ? 'X' : 'O';
 
+    // helpers 
+  const winner = calculateWinner(squares);
+  const turns = turnsLeft(squares);
+  const status = calculateStatus(turns, winner, player);
+
+
   function handleClick(index){
     if(squares[index]) return;
     const newSquares = squares.slice();
@@ -18,23 +25,14 @@ export default function Board() {
     setIsXNext(!isXNext)
   }
 
-  function isGameOver(){
-    return squares.filter(square => !square).length
-  }
 
-  // calc winner -> calc status
-  // set array of winningLines
-  // if 3 in a row, then check a===b && a===c
-  // return a 
-  // return null
-
-  // calc status -> handleclick
-  // winner: 
-  // isGameOver && !winner -> Draw!
-  // now to play: 
-  // ???
   
     return (
+      <>
+      <div style={{marginBottom: '0.5rem'}}>
+        {status}
+      </div>
+
       <div
         style={{
           display: 'grid',
@@ -49,5 +47,7 @@ export default function Board() {
         <Square key={index} value={item} onSquareClick={() => handleClick(index)} />
       ))}
       </div>
+
+      </>
     )
   }
