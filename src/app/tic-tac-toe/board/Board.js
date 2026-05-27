@@ -1,3 +1,4 @@
+'use client'
 import {useGameBoard} from '../../store/tic-tac-toe/store'
 import Square from '../Square/Square'
 
@@ -14,7 +15,7 @@ export default function Board() {
     const newSquares = squares.slice();
     newSquares[index] = player
     setSquares(newSquares)
-    setIsXNext(!player)
+    setIsXNext(!isXNext)
   }
 
   function isGameOver(){
@@ -28,8 +29,9 @@ export default function Board() {
   // return null
 
   // calc status -> handleclick
-  // winningLines -> calcWinner
+  // winner: 
   // isGameOver && !winner -> Draw!
+  // now to play: 
   // ???
   
     return (
@@ -44,7 +46,7 @@ export default function Board() {
         }}
       >
       {squares.map((item, index) => (
-        <Square key={index} value={item} onSquareClick={handleClick} />
+        <Square key={index} value={item} onSquareClick={() => handleClick(index)} />
       ))}
       </div>
     )
