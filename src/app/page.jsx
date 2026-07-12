@@ -1,6 +1,7 @@
 'use client'
 import {create} from 'zustand'
 import Board from '../app/tic-tac-toe/board/Board'
+import { useGameBoard } from './store/tic-tac-toe/store'
 
 const useCounter = create((set) => ({
   count: 0,
@@ -9,9 +10,20 @@ const useCounter = create((set) => ({
 }))
 
 export default function Home() {
+  const history = useGameBoard((state) => state.history)
+  const setHistory = useGameBoard((state) => state.setHistory)
+  const isXNext = useGameBoard((state) => state.isXNext)
+  const setIsXNext = useGameBoard((state) => state.setIsXNext)
+  const currentSquares = history[history.length - 1]
+
   const count = useCounter(state => state.count)
   const increment = useCounter(state => state.increment)
   const decrement = useCounter(state => state.decrement)
+  
+  function handlePlay(newHistory){
+    setHistory(history.concat([newHistory]))
+    setIsXNext(!isXNext)
+  }
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
@@ -31,7 +43,7 @@ export default function Home() {
             </button>
           </div>
 
-          <Board />
+          <Board squares={currentSquares} isXNext={isXNext} handlePlay={handlePlay}/>
         </div>
       </main>
     </div>

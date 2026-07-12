@@ -1,31 +1,20 @@
 'use client'
-import {useGameBoard} from '../../store/tic-tac-toe/store'
 import Square from '../Square/Square'
 import {calculateWinner, turnsLeft, calculateStatus} from '../utils/utils'
 
-export default function Board() {
-  const squares = useGameBoard((state) => state.squares)
-  const setSquares = useGameBoard((state) => state.setSquares)
-  const isXNext = useGameBoard((state) => state.isXNext)
-  const setIsXNext = useGameBoard((state) => state.setIsXNext)
-
+export default function Board({squares, isXNext, handlePlay}) {
+  // helpers 
   const player = isXNext ? 'X' : 'O';
-
-    // helpers 
   const winner = calculateWinner(squares);
   const turns = turnsLeft(squares);
   const status = calculateStatus(turns, winner, player);
-
-
+  
   function handleClick(index){
-    if(squares[index]) return;
+    if(squares[index] || winner) return;
     const newSquares = squares.slice();
     newSquares[index] = player
-    setSquares(newSquares)
-    setIsXNext(!isXNext)
+    handlePlay(newSquares)
   }
-
-
   
     return (
       <>

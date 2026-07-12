@@ -11,6 +11,8 @@ const winningLines = [
     [2,4,6],
 ]
 
+    
+
     for(let i = 0; i < winningLines.length; i++){
        const [a,b,c]=winningLines[i];
 

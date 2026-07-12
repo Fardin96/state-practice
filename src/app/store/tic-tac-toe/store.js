@@ -3,14 +3,14 @@ import {combine} from 'zustand/middleware'
 
 // create board grid/square value 
 export const useGameBoard = create(
-    combine({ squares: Array(9).fill(null), isXNext: true }, (set) => {
+    combine({ history: [Array(9).fill(null)], isXNext: true }, (set) => {
         return {
-            setSquares: (newSquares) => {
+            setHistory: (newHistory) => {
                 set((state) => ({
-                    squares: 
-                        typeof newSquares === 'function' ?
-                            newSquares(state.squares) :
-                            newSquares
+                    history: 
+                        typeof newHistory === 'function' ?
+                            newHistory(state.history) :
+                            newHistory
                 }))
             },            
             setIsXNext: (newIsXNext) => {
