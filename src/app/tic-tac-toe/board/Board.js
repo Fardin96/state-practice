@@ -32,9 +32,9 @@ export default function Board({squares, isXNext, handlePlay}) {
           border: '1px solid #999',
         }}
       >
-      {squares.map((item, index) => (
-        <Square key={index} value={item} onSquareClick={() => handleClick(index)} />
-      ))}
+        {squares.map((item, index) => (
+          <Square key={index} value={item} onSquareClick={() => handleClick(index)} />
+        ))}
       </div>
 
       </>

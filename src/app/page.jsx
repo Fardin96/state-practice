@@ -12,17 +12,23 @@ const useCounter = create((set) => ({
 export default function Home() {
   const history = useGameBoard((state) => state.history)
   const setHistory = useGameBoard((state) => state.setHistory)
-  const isXNext = useGameBoard((state) => state.isXNext)
-  const setIsXNext = useGameBoard((state) => state.setIsXNext)
-  const currentSquares = history[history.length - 1]
+  const currentMove = useGameBoard((state) => state.currentMove)
+  const setCurrentMove = useGameBoard((state) => state.setCurrentMove)
+  const currentSquares = history[currentMove]
+  const isXNext = currentMove % 2 === 0
 
   const count = useCounter(state => state.count)
   const increment = useCounter(state => state.increment)
   const decrement = useCounter(state => state.decrement)
   
-  function handlePlay(newHistory){
-    setHistory(history.concat([newHistory]))
-    setIsXNext(!isXNext)
+  function handlePlay(newSquares){
+    const newHistory = history.slice(0, currentMove + 1).concat([newSquares]);
+    setHistory(newHistory);
+    setCurrentMove(newHistory.length - 1)
+  }
+
+  function handleJumpTo(nextMove){
+    setCurrentMove(nextMove)
   }
 
   return (
@@ -44,6 +50,20 @@ export default function Home() {
           </div>
 
           <Board squares={currentSquares} isXNext={isXNext} handlePlay={handlePlay}/>
+
+          <div>
+            <ol>
+              {history.map((_, index) =>  {
+                const description = index > 0 ? 'Go to game #' + index : 'Go to game Start';
+                
+                return (
+                  <li key={index} className={index === currentMove ? 'font-bold' : ''}>
+                    <button onClick={() => handleJumpTo(index)}>{description}</button>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
         </div>
       </main>
     </div>

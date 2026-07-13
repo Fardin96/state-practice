@@ -3,7 +3,7 @@ import {combine} from 'zustand/middleware'
 
 // create board grid/square value 
 export const useGameBoard = create(
-    combine({ history: [Array(9).fill(null)], isXNext: true }, (set) => {
+    combine({ history: [Array(9).fill(null)], currentMove: 0 }, (set) => {
         return {
             setHistory: (newHistory) => {
                 set((state) => ({
@@ -13,14 +13,13 @@ export const useGameBoard = create(
                             newHistory
                 }))
             },            
-            setIsXNext: (newIsXNext) => {
+            setCurrentMove: (newCurrentMove) => {
                 set((state) => ({
-                    isXNext: 
-                        typeof newIsXNext === 'function' ?
-                            newIsXNext(state.isXNext) :
-                            newIsXNext
+                    currentMove: typeof newCurrentMove === 'function' ?
+                        newCurrentMove(state.currentMove)
+                        : newCurrentMove
                 }))
-            },            
+            }            
         }
     })
 )
