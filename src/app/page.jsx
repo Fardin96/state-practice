@@ -2,6 +2,8 @@
 import {create} from 'zustand'
 import Board from '../app/tic-tac-toe/board/Board'
 import { useGameBoard } from './store/tic-tac-toe/store'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import Tanstack from '../app/tanStack/TanStack'
 
 const useCounter = create((set) => ({
   count: 0,
@@ -10,6 +12,8 @@ const useCounter = create((set) => ({
 }))
 
 export default function Home() {
+  const queryClient = new QueryClient();
+  
   const history = useGameBoard((state) => state.history)
   const setHistory = useGameBoard((state) => state.setHistory)
   const currentMove = useGameBoard((state) => state.currentMove)
@@ -32,6 +36,7 @@ export default function Home() {
   }
 
   return (
+    <QueryClientProvider client={queryClient}>
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
@@ -64,8 +69,12 @@ export default function Home() {
               })}
             </ol>
           </div>
+
+        <Tanstack />
+        
         </div>
       </main>
     </div>
+</QueryClientProvider>
   );
 }
