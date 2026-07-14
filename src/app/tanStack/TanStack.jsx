@@ -7,7 +7,7 @@ export default function TanStack() {
     queryFn: () => fetch('https://api.github.com/repos/TanStack/query').then((res) => res.json())
   })
 
-  console.log(data)
+//   console.log(data)
 
         if(error) return(
             <div>

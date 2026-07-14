@@ -4,6 +4,7 @@ import Board from '../app/tic-tac-toe/board/Board'
 import { useGameBoard } from './store/tic-tac-toe/store'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import Tanstack from '../app/tanStack/TanStack'
+import Todos from '../app/tanStack/Todos'
 
 const useCounter = create((set) => ({
   count: 0,
@@ -71,6 +72,8 @@ export default function Home() {
           </div>
 
         <Tanstack />
+
+        <Todos />
         
         </div>
       </main>
