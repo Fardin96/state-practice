@@ -14,9 +14,9 @@ export const useNotificationStore = create<NotificationStore>()(
     immer(
         (set) => ({
             pendingEvents: [],
-            enqueue: (event) => set({pendingEvents: }),
-            dequeue: (dequeue) => set({pendingEvents: }),
-            clearAll: () => {},
+            enqueue: (event) => set((state) => state.pendingEvents.push(event)),
+            dequeue: (id) => set((state) => state.pendingEvents.filter((item:Event) => (item.id !== id))),
+            clearAll: () => set((state) => state.pendingEvents = [])
         })
     )
 )

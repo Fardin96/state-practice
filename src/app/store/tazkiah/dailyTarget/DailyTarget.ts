@@ -17,12 +17,12 @@ export const useDailyTarget = create<DailyTarget>()(
         immer((set) => ({
             checklist: [],
             addItems: (label) => set((state) => state.checklist.push({id: Date.now().toString() + Math.random().toString(36).slice(2), label, done: false})), 
-            toggleItems: (id) => set((state) => state.checklist.forEach((item, _, array) => {
+            toggleItems: (id) => set((state) => state.checklist.forEach((item: ListItem) => {
                 if(item.id === id) {
                     item.done = !item.done;
                 }
             })), 
-            incrementProgress: (source) => set({}) // ? which state does this belong to??
+            incrementProgress: (source) => set({}) // TODO
         })),
         {
             name: 'tazkiah-targets',
