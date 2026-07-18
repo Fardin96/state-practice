@@ -5,7 +5,7 @@ import { useGameBoard } from './store/tic-tac-toe/store'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import Tanstack from '../app/tanStack/TanStack'
 import Todos from '../app/tanStack/Todos'
-import {useSalatStore} from '../app/store/tic-tac-toe/salatStore/store'
+import {useSalatStore} from './store/tazkiah/salatStore/SalatStore'
 
 const useCounter = create((set) => ({
   count: 0,
