@@ -1,16 +1,12 @@
 import {create} from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { storageInstance } from '../MMKVStorage';
+import { secureStorageInstance } from '../MMKVStorage';
 
 interface AuthStore{
    isAuthenticated: boolean;
-   setIsAuthenticated: (isAuthenticated: boolean) => void;
    userId: string | null;
-   setUserId: (userId: string) => void;
    accessToken: string | null;
-   setAccessToken: (accessToken: string) => void;
    refreshToken: string | null;
-   setRefreshToken: (refreshToken: string) => void;
    logIn: (userId: string, accessToken: string, refreshToken: string) => void;
    logOut: () => void;
 }
@@ -19,20 +15,19 @@ export const useAuthStore = create<AuthStore>()(
     persist(
         (set) => ({
             isAuthenticated: false,
-            setIsAuthenticated: (isAuthenticated) => set({isAuthenticated}),
             userId: 'dfasdfasdf',
-            setUserId: (userId) => set({userId}),
             accessToken: 'sdfasdf',
-            setAccessToken: (accessToken) => set({accessToken}),
             refreshToken: 'sdfasdf',
-            setRefreshToken: (refreshToken) => set({refreshToken}),
-            logIn: (userId, accessToken, refreshToken) => {},
-            logOut: () => {set({}, false)}
+            logIn: (userId, accessToken, refreshToken) => set({
+                isAuthenticated: true, userId, accessToken, refreshToken
+            }), // ??? validate and store using actions, kinda cheated
+            logOut: () => {set({
+                isAuthenticated: false
+            }, true)} // ?? true gives ts errors!: no overload matches this call
         }), 
         {
             name: 'tazkiah-auth',
-            storage: createJSONStorage(() => storageInstance),
+            storage: createJSONStorage(() => secureStorageInstance),
         }
     )
-    
 )
