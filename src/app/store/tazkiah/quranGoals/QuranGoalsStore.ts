@@ -3,13 +3,13 @@ import { createJSONStorage, persist} from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { storageInstance } from '../MMKVStorage';
 
-type Goal = {id: number, dailyTargetAyah: number};
+type Goal = {id: string, dailyTargetAyah: number};
 
 interface QuranGoals{
     goals: Goal[],
     dailyProgress: Record<string, number>,
     addGoal: (goal: Goal) => void;
-    removeGoal: (id: number) => void;
+    removeGoal: (id: string) => void;
     logProgress: (date: string, ayahs: number) => void;
 }
 
@@ -22,9 +22,9 @@ export const useQuranGoalsStore = create<QuranGoals>()(
                     state.goals.push(goal);
                 }),
                 removeGoal: (id) => set((state) => {
-                    state.goals.find()
+                    state.goals.filter((item:Goal) => item.id !== id)
                 }),
-                logProgress: (id) => set({})
+                logProgress: (date, ayahs) => set((state) => state.dailyProgress[date]) //! 
         })), 
         {
             name: 'tazkiah-goals',
