@@ -25,7 +25,7 @@ persist(
         setNotificationsEnabled: (notificaitonsEnabled) => set({ notificaitonsEnabled }),
     }),
     {
-        name: 'tazkiah-persist',
+        name: 'tazkiah-settings',
         storage: createJSONStorage(() => storageInstance)
     }
 ));
