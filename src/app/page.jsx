@@ -5,6 +5,7 @@ import { useGameBoard } from './store/tic-tac-toe/store'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import Tanstack from '../app/tanStack/TanStack'
 import Todos from '../app/tanStack/Todos'
+import {useSalatStore} from '../app/store/tic-tac-toe/salatStore/store'
 
 const useCounter = create((set) => ({
   count: 0,
@@ -13,6 +14,7 @@ const useCounter = create((set) => ({
 }))
 
 export default function Home() {
+  const streak = useSalatStore((state) => state.streak)
   const queryClient = new QueryClient();
   
   const history = useGameBoard((state) => state.history)
@@ -74,6 +76,11 @@ export default function Home() {
         <Tanstack />
 
         <Todos />
+
+        <div>
+    <input type="checkbox" id="scales" name="scales" />
+    <label for="scales">Salat Name</label>
+  </div>
         
         </div>
       </main>

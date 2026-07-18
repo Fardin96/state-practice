@@ -1,4 +1,5 @@
 import {create} from 'zustand'
+import {immer} from 'zustand/middleware/immer'
 
 interface SalatState{
     streak: number;
@@ -7,9 +8,16 @@ interface SalatState{
     markDone: (date: string, prayer: string) => void;
 }
 
-const store = create<SalatState>((set) => ({
-    streak: 0,
-    resetDays: (date: string) => {}
-    completedPrayer: ,
-    markDone: (date: string, prayer: string) => {},
-}))
+export const useSalatStore = create<SalatState>()(
+    immer((set) => ({
+            completedPrayer: {},
+            streak: 0,
+            resetDays: (date: string) => set((state) => {
+                state.completedPrayer[date]  = [];
+            }),
+            markDone: (date: string, prayer: string) => set((state) => {
+                if(!state.completedPrayer[date]) state.completedPrayer[date] = [];
+                state.completedPrayer[date].push(prayer);
+            })
+    }))
+);
