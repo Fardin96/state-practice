@@ -23,7 +23,7 @@ export const useAuthStore = create<AuthStore>()(
             }), 
             logOut: () => {set({
                 isAuthenticated: false, userId: null, accessToken: null, refreshToken: null
-            })} // ? what if i want to discard entire state on logout??? asking since true isn't working here!
+            })} 
         }), 
         {
             name: 'tazkiah-auth',

@@ -22,9 +22,15 @@ export const useQuranGoalsStore = create<QuranGoals>()(
                     state.goals.push(goal);
                 }),
                 removeGoal: (id) => set((state) => {
-                    state.goals.filter((item:Goal) => item.id !== id)
+                    state.goals = state.goals.filter((item:Goal) => item.id !== id)
                 }),
-                logProgress: (date, ayahs) => set((state) => state.dailyProgress[date]) //! 
+                logProgress: (date, ayahs) => set((state) => {
+                    if(state.dailyProgress[date]){
+                        state.dailyProgress[date] = state.dailyProgress[date] + ayahs; // adds the date if it doesn't 
+                    } else {
+                        state.dailyProgress[date] = ayahs; // add the value
+                    }
+                }) 
         })), 
         {
             name: 'tazkiah-goals',
